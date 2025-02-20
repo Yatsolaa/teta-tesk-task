@@ -1,16 +1,78 @@
-{{ 'custom-section-featured-product.css' |  asset_url |  stylesheet_tag }}
+{{ 'custom-section-featured-product.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'custom-section-featured-products.js' |  asset_url }}" defer></script>
 
-<s-featured-products class="s-featured-products">
-</s-featured-products>
+<s-featured-products class="s-featured-products"></s-featured-products>
 
 {% schema %}
-  {
-    "name": "Featured Products",
-    "presets": [
-      {
-        "name": "Featured Products"
-      }
-    ]
-  }
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_title",
+      "label": "Section Title",
+      "default": "Featured Products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slider_tab",
+      "name": "Slider Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title"
+        },
+        {
+          "type": "header",
+          "content": "Tab Content"
+        },
+        {
+          "type": "select",
+          "id": "content_source",
+          "label": "Source",
+          "options": [
+            {
+              "value": "collection",
+              "label": "Collection"
+            },
+            {
+              "value": "product_list",
+              "label": "Product List"
+            }
+          ],
+          "default": "collection"
+        },
+        {
+          "type": "range",
+          "id": "max_products",
+          "label": "Maximum Number of Products",
+          "min": 1,
+          "max": 20,
+          "unit": "Itm",
+          "step": 1,
+          "default": 10
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection",
+          "info": "Choose a collection to display products"
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Select Product List",
+          "info": "Choose specific products to display"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
 {% endschema %}
