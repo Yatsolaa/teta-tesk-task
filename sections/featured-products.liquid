@@ -1,0 +1,16 @@
+{{ 'custom-section-featured-product.css' |  asset_url |  stylesheet_tag }}
+<script src="{{ 'custom-section-featured-products.js' |  asset_url }}" defer></script>
+
+<s-featured-products class="s-featured-products">
+</s-featured-products>
+
+{% schema %}
+  {
+    "name": "Featured Products",
+    "presets": [
+      {
+        "name": "Featured Products"
+      }
+    ]
+  }
+{% endschema %}
