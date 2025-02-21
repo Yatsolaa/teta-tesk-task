@@ -6,6 +6,8 @@ if (!customElements.get("c-product-card")) {
 
       connectedCallback() {
         this.updateVariables()
+
+        this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
       }
 
       disconnectedCallback() {
@@ -17,7 +19,6 @@ if (!customElements.get("c-product-card")) {
       }
 
       updateVariables = () => {
-        console.log("update");
         this.addToCartButton = this.querySelector('.js-product-card__button');
         this.select = this.querySelector('.js-product-card__select') || null;
         
@@ -31,6 +32,8 @@ if (!customElements.get("c-product-card")) {
       addToCartHandler = (event) => {
         event.preventDefault();
         const button = event.target.closest('.js-product-card__button');
+
+        this.classList.add('is-loading');
         button.disabled = true;
         
         let variantId;
@@ -41,6 +44,11 @@ if (!customElements.get("c-product-card")) {
           variantId = button.dataset.variantId;
         }
 
+        if (this.cart) {
+          this.sections = this.cart.getSectionsToRender().map((section) => section.id)
+          this.cart.setActiveElement(document.activeElement);
+        }
+
         const formData = {
           items: [
             {
@@ -48,6 +56,8 @@ if (!customElements.get("c-product-card")) {
               quantity: 1,
             },
           ],
+          sections: this.sections,
+          sections_url: window.location.pathname
         };
 
         fetch(window.Shopify.routes.root + "cart/add.js", {
@@ -57,11 +67,15 @@ if (!customElements.get("c-product-card")) {
           },
           body: JSON.stringify(formData),
         })
+          .then((response) => response.json())
           .then((response) => {
-            return response.json();
-          })
-          .then((response) => {
+            const cartResponse = response;
+            cartResponse.key = response.items[0].key;
+            if (this.cart){
+              this.cart.renderContents(cartResponse);
+            }
             button.disabled = false;
+            this.classList.remove('is-loading');
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -69,13 +83,13 @@ if (!customElements.get("c-product-card")) {
       }
 
       changeVariantHandler = (event) => {
+        this.classList.add('is-loading');
+
         const select = event.target.closest('.js-product-card__select');
         const currentVariant = select.value
         const productHandle = this.dataset.productHandle;
 
         const url = `${window.Shopify.routes.root}products/${productHandle}?variant=${currentVariant}&view=product-card`
-
-        console.log("url", url)
 
         fetch(url)
         .then((response) => {
@@ -84,14 +98,13 @@ if (!customElements.get("c-product-card")) {
         .then((html) => {
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, "text/html");
-
-          console.log("doc", doc)
       
           const productCard = doc.querySelector(".js-product-card");
           this.innerHTML = productCard.innerHTML;
         })
         .then(() => {
           this.updateVariables();
+          this.classList.remove('is-loading');
         })
         .catch((error) => {
           console.error("Error fetching product card:", error);
