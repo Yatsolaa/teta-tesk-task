@@ -64,6 +64,10 @@
       "next_slide": "Slide right",
       "previous_slide": "Slide left",
       "name": "Slider"
+    },
+    "product_card": {
+      "add_to_cart": "Add to card",
+      "sold_out": "Sold out"
     }
   },
   "newsletter": {
