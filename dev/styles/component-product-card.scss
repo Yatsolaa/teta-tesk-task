@@ -52,7 +52,7 @@
 
     & > img{
       aspect-ratio: 1;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
       width: 100%;
       height: fit-content;

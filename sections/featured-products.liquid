@@ -15,7 +15,7 @@
   endfor
 %}
 
-<s-featured-products class="s-featured-products">
+<s-featured-products class="s-featured-products" data-initial-tab="{{ initial_tab }}">
   <div class="s-featured-products__container">
     {% if section.settings.section_title != blank %}
       <h2 class="s-featured-products__title">{{ section.settings.section_title }}</h2>
@@ -45,34 +45,38 @@
         </div>
       </div>
 
-      <div class="s-featured-products__product-slider-wrapper">
-        <div class="s-featured-products__arrow s-featured-products__arrow--prev js-arrow-prev">
-          {% render 'icon-arrow' %}
-        </div>
-        <div class="s-featured-products__arrow s-featured-products__arrow--next js-arrow-next">
-          {% render 'icon-arrow' %}
-        </div>
+      {% for block in tabs %}
+        {% liquid
+          assign current_tab = block.settings.tab_title | handleize
 
-        <div class="s-featured-products__slider js-featured-products__slider">
-          {% for block in tabs %}
-            {% liquid
-              assign current_tab = block.settings.tab_title | handleize
+          if block.settings.content_source == 'collection'
+            assign products_source = block.settings.collection.products
+          elsif block.settings.content_source == 'product_list'
+            assign products_source = block.settings.product_list
+          endif
+        %}
+        <div
+          class="s-featured-products__slider-tab js-featured-products__slider-tab {% if current_tab == initial_tab %}is-active{% endif %}"
+          data-tab="{{ current_tab }}"
+        >
+          <div class="s-featured-products__arrows">
+            <div class="s-featured-products__arrow s-featured-products__arrow--prev js-arrow-prev">
+              {% render 'icon-arrow' %}
+            </div>
+            <div class="s-featured-products__arrow s-featured-products__arrow--next js-arrow-next">
+              {% render 'icon-arrow' %}
+            </div>
+          </div>
 
-              if block.settings.content_source == 'collection'
-                assign products_source = block.settings.collection.products
-              elsif block.settings.content_source == 'product_list'
-                assign products_source = block.settings.product_list
-              endif
-            %}
-
-            {% for product in products_source, limit: block.settings.max_products %}
-              <div class="s-featured-products__product-card js-featured-products__product-card {% unless current_tab == initial_tab %}is-hidden{% endunless %}" data-tab="{{ current_tab }}">
+          <div class="s-featured-products__slider js-featured-products__slider" data-tab="{{ current_tab }}">
+            {% for product in products_source limit: block.settings.max_products %}
+              <div class="s-featured-products__product-card">
                 {% render 'product-card', product: product %}
               </div>
             {% endfor %}
-          {% endfor %}
+          </div>
         </div>
-      </div>
+      {% endfor %}
     {% endif %}
   </div>
 </s-featured-products>

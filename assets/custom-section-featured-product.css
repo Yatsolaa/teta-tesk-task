@@ -104,25 +104,69 @@
 .s-featured-products__tab-title > label:hover {
   border-color: #37341C;
 }
-.s-featured-products__slider-tab.is-hidden {
+.s-featured-products__slider-tab {
   display: none;
 }
+.s-featured-products__slider-tab.is-active {
+  display: block;
+}
 .s-featured-products__slider {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-column-gap: 24px;
-  -moz-column-gap: 24px;
-  column-gap: 24px;
+  margin: 40px 0 0;
 }
 @media screen and (min-width: 768px) {
   .s-featured-products__slider {
-    -webkit-column-gap: 30px;
-    -moz-column-gap: 30px;
-    column-gap: 30px;
+    margin: 48px 0 0;
   }
 }
+.s-featured-products__slider, .s-featured-products__slider .flickity-viewport:focus-visible, .s-featured-products__slider .flickity-slider:focus-visible {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.s-featured-products__arrows {
+  margin: 0;
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .s-featured-products__arrows {
+    margin: 40px 0 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    -webkit-column-gap: 24px;
+    -moz-column-gap: 24px;
+    column-gap: 24px;
+  }
+}
+.s-featured-products__arrow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  background-color: #939C38;
+  cursor: pointer;
+}
+.s-featured-products__arrow--next > svg {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.s-featured-products__arrow.is-disabled {
+  pointer-events: none;
+  opacity: 0.8;
+}
 .s-featured-products__product-card {
+  margin-right: 24px;
   width: 100%;
   max-width: 287px;
   -ms-flex-negative: 0;
@@ -131,8 +175,6 @@
 @media screen and (min-width: 768px) {
   .s-featured-products__product-card {
     max-width: 305px;
+    margin-right: 30px;
   }
-}
-.s-featured-products__product-card.is-hidden {
-  display: none;
 }
