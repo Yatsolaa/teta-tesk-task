@@ -55,20 +55,36 @@
           "type": "slider_tab",
           "settings": {
             "tab_title": "Shop By Category",
-            "content_source": "collection",
+            "content_source": "product_list",
             "max_products": 10,
             "collection": "automated-collection",
-            "product_list": []
+            "product_list": [
+              "the-complete-snowboard",
+              "the-compare-at-price-snowboard",
+              "the-multi-managed-snowboard",
+              "the-multi-location-snowboard",
+              "the-inventory-not-tracked-snowboard",
+              "the-out-of-stock-snowboard",
+              "the-videographer-snowboard"
+            ]
           }
         },
         "slider_tab_LAicGg": {
           "type": "slider_tab",
           "settings": {
             "tab_title": "Best Sellers",
-            "content_source": "collection",
+            "content_source": "product_list",
             "max_products": 10,
             "collection": "frontpage",
-            "product_list": []
+            "product_list": [
+              "the-compare-at-price-snowboard",
+              "the-collection-snowboard-liquid",
+              "the-collection-snowboard-oxygen",
+              "the-collection-snowboard-hydrogen",
+              "the-3p-fulfilled-snowboard",
+              "the-multi-location-snowboard",
+              "the-inventory-not-tracked-snowboard"
+            ]
           }
         },
         "slider_tab_aE6wbM": {
@@ -77,7 +93,7 @@
             "tab_title": "New Arrivals",
             "content_source": "collection",
             "max_products": 10,
-            "collection": "hydrogen",
+            "collection": "automated-collection",
             "product_list": []
           }
         },
@@ -86,7 +102,7 @@
           "settings": {
             "tab_title": "On Sale",
             "content_source": "product_list",
-            "max_products": 10,
+            "max_products": 4,
             "collection": "",
             "product_list": [
               "selling-plans-ski-wax",
@@ -104,7 +120,7 @@
         "slider_tab_nWezFY"
       ],
       "settings": {
-        "tab_title": "Featured Products"
+        "section_title": "Featured Products"
       }
     },
     "featured_collection": {
