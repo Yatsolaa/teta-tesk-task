@@ -1,7 +1,81 @@
 {{ 'custom-section-featured-product.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'custom-section-featured-products.js' |  asset_url }}" defer></script>
 
-<s-featured-products class="s-featured-products"></s-featured-products>
+{{ 'component-product-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'component-product-card.js' |  asset_url }}" defer></script>
+
+{% liquid
+  assign tabs = section.blocks | where: 'type', 'slider_tab'
+  assign initial_tab = ''
+
+  for block in tabs
+    if forloop.first
+      assign initial_tab = block.settings.tab_title | handleize
+    endif
+  endfor
+%}
+
+<s-featured-products class="s-featured-products">
+  <div class="s-featured-products__container">
+    {% if section.settings.section_title != blank %}
+      <h2 class="s-featured-products__title">{{ section.settings.section_title }}</h2>
+    {% endif %}
+
+    {% if tabs.size > 0 %}
+      <div class="s-featured-products__tabs-wrapper">
+        <div class="s-featured-products__tabs">
+          {% for block in tabs %}
+            <div class="s-featured-products__tab-title">
+              <input
+                type="radio"
+                class="js-featured-products__tab-button"
+                id="tab-{{ forloop.index0 }}"
+                name="tabs"
+                value="{{ block.settings.tab_title | handleize }}"
+                hidden
+                {% if forloop.first %}
+                  checked
+                {% endif %}
+              >
+              <label for="tab-{{ forloop.index0 }}">
+                {{ block.settings.tab_title }}
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="s-featured-products__product-slider-wrapper">
+        <div class="s-featured-products__arrow s-featured-products__arrow--prev js-arrow-prev">
+          {% render 'icon-arrow' %}
+        </div>
+        <div class="s-featured-products__arrow s-featured-products__arrow--next js-arrow-next">
+          {% render 'icon-arrow' %}
+        </div>
+
+        <div class="s-featured-products__slider js-featured-products__slider">
+          {% for block in tabs %}
+            {% liquid
+              assign current_tab = block.settings.tab_title | handleize
+
+              if block.settings.content_source == 'collection'
+                assign products_source = block.settings.collection.products
+              elsif block.settings.content_source == 'product_list'
+                assign products_source = block.settings.product_list
+              endif
+            %}
+
+            {% for product in products_source, limit: block.settings.max_products %}
+              <div class="s-featured-products__product-card js-featured-products__product-card {% unless current_tab == initial_tab %}is-hidden{% endunless %}" data-tab="{{ current_tab }}">
+                {% render 'product-card', product: product %}
+              </div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</s-featured-products>
 
 {% schema %}
 {
@@ -9,7 +83,7 @@
   "settings": [
     {
       "type": "text",
-      "id": "tab_title",
+      "id": "section_title",
       "label": "Section Title",
       "default": "Featured Products"
     }

@@ -1,3 +1,124 @@
 .s-featured-products{
   display: block;
+  padding: 64px 0;
+  
+  @media screen and (min-width:768px) {
+    padding: 64px 0 128px;
+  }
+
+  &__container{
+    padding: 0 16px;
+
+    max-width: 1472px;
+    margin: 0 auto;
+  }
+
+  &__title{
+    margin: 0;
+    font-family: var(--font-heading-family);
+    color: #5F5A2A;
+    font-size: 34px;
+    font-style: normal;
+    text-align: center;
+    font-weight: 600;
+    line-height: 136.5%;
+    text-transform: capitalize;
+
+    @media screen and (min-width:768px) {
+      font-size: 48px;
+    }
+  }
+
+  &__tabs-wrapper{
+    overflow-x: scroll;
+  }
+
+  &__tabs{
+    width: max-content;
+    margin: 48px auto 0;
+    border: 2px solid #5F5A2A;
+    border-radius: 64px;
+    padding: 10px 8px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 6px;
+    
+    @media screen and (min-width:768px) {
+      margin: 64px auto 0;
+
+      padding: 10px 14px;
+      justify-content: center;
+      column-gap: 64px;
+    }
+  }
+
+  &__tab-title{
+    flex-shrink: 0;
+
+    & > label{
+      border-radius: 64px;
+      padding: 12px 16px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--Gray-gray4, #727272);
+
+      font-family: var(--font-body-family);
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 134.6%;
+      border: 2px solid transparent;
+
+      cursor: pointer;
+      transition: background-color 250ms ease-out, color 250ms ease-out, border-color 250ms ease-out;
+
+      @media screen and (min-width:768px) {
+        padding: 16px 24px;
+        font-size: 20px;
+      }
+    }
+
+    & > input:checked + label{
+      background-color: #37341C;
+      color: #E9EBCE;
+    }
+
+    & > label:hover{
+      border-color: #37341C;
+    }
+  }
+
+  &__slider-tab{
+
+    &.is-hidden{
+      display: none;
+    }
+  }
+
+  &__slider{
+    display: flex;
+    column-gap: 24px;
+    
+    @media screen and (min-width:768px) {
+      column-gap: 30px;
+    }
+  }
+
+  &__product-card{
+    width: 100%;
+    max-width: 287px;
+    flex-shrink: 0;
+
+    @media screen and (min-width:768px) {
+      max-width: 305px;
+    }
+
+    &.is-hidden{
+      display: none;
+    }
+  }
 }
